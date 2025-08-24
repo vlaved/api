@@ -5,19 +5,19 @@ info:
     \ Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).\
     \  For this sample, you can use the api key `special-key` to test the authorization\
     \ filters."
-  version: "1.0"
-  title: "Мой супер-пупер API"
+  version: "1.0.5"
+  title: "Swagger Petstore111"
   termsOfService: "http://swagger.io/terms/"
   contact:
     email: "apiteam@swagger.io"
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "localhost"
-basePath: "/v1"
+host: "petstore.swagger.io"
+basePath: "/v2"
 tags:
 - name: "pet"
-  description: "Все про животных"
+  description: "Everything about your Pets"
   externalDocs:
     description: "Find out more"
     url: "http://swagger.io"
@@ -289,26 +289,6 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-  /store/inventory:
-    get:
-      tags:
-      - "store"
-      summary: "Returns pet inventories by status"
-      description: "Returns a map of status codes to quantities"
-      operationId: "getInventory"
-      produces:
-      - "application/json"
-      parameters: []
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            type: "object"
-            additionalProperties:
-              type: "integer"
-              format: "int32"
-      security:
-      - api_key: []
   /store/order:
     post:
       tags:
@@ -387,6 +367,50 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "Order not found"
+  /store/inventory:
+    get:
+      tags:
+      - "store"
+      summary: "Returns pet inventories by status"
+      description: "Returns a map of status codes to quantities"
+      operationId: "getInventory"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "object"
+            additionalProperties:
+              type: "integer"
+              format: "int32"
+      security:
+      - api_key: []
+  /user/createWithArray:
+    post:
+      tags:
+      - "user"
+      summary: "Creates list of users with given input array"
+      description: ""
+      operationId: "createUsersWithArrayInput"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "List of user object"
+        required: true
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/User"
+      responses:
+        default:
+          description: "successful operation"
   /user/createWithList:
     post:
       tags:
@@ -532,30 +556,6 @@ paths:
       - "application/json"
       - "application/xml"
       parameters: []
-      responses:
-        default:
-          description: "successful operation"
-  /user/createWithArray:
-    post:
-      tags:
-      - "user"
-      summary: "Creates list of users with given input array"
-      description: ""
-      operationId: "createUsersWithArrayInput"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      - "application/xml"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "List of user object"
-        required: true
-        schema:
-          type: "array"
-          items:
-            $ref: "#/definitions/User"
       responses:
         default:
           description: "successful operation"
