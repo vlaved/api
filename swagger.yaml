@@ -22,7 +22,7 @@ paths:
     get:
       tags:
       - "conveyer"
-      summary: "Возвращает актуальную информацию по постам"
+      summary: "Информация по постам"
       description: "Значения по умолчанию: from = 2, to = 28."
       operationId: "conveyer"
       produces:
@@ -51,15 +51,21 @@ paths:
     get:
       tags:
       - "nzp"
-      summary: "Finds Pets by status"
+      summary: "Количество в разрезе моделей"
       description: ""
       operationId: "nzp"
       produces:
       - "application/json"
       responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/nzp"
         400:
           description: "Invalid status value"
-      deprecated: true
+      deprecated: false
   /sgp:
     get:
       tags:
@@ -90,30 +96,89 @@ definitions:
   conveyer:
     type: "object"
     properties:
+      errors:
+        type: "string"
+        example: ""
+      posts:
+        type: "array"
+        xml:
+          wrapped: true
+        items:
+          xml:
+            name: "posts"
+          $ref: "#/definitions/posts"
+    xml:
+      name: "conveyer"
+  nzp:
+    type: "object"
+    properties:
       total:
         type: "integer"
-        format: "int64"
+        example: "2"
       errors:
-        type: "integer"
-        format: "int64"
+        type: "string"
+        example: ""
       models:
         type: "array"
         xml:
           wrapped: true
         items:
           xml:
-            name: "Model"
-          $ref: "#/definitions/Model"
+            name: "models"
+          $ref: "#/definitions/models"
+      tsm:
+        type: "array"
+        xml:
+          wrapped: true
+        items:
+          xml:
+            name: "tsm"
+          $ref: "#/definitions/tsm"
     xml:
       name: "nzp"
-  Model:
+  models:
     type: "object"
     properties:
       model:
-        type: "integer"
-        format: "int64"
+        type: "string"
+        example: "RAV4"
       count:
         type: "integer"
-        format: "int64"
+        example: "2"
     xml:
-      name: "Model"
+      name: "models"
+  tsm:
+    type: "object"
+    properties:
+      period:
+        type: "string"
+        example: "за день"
+      count:
+        type: "integer"
+        example: 12
+    xml:
+      name: "tsm"
+  posts:
+    type: "object"
+    properties:
+      post:
+        type: "integer"
+        example: "2"
+      model:
+        type: "string"
+        example: "RAV4"
+      vin:
+        type: "string"
+        example: "VIN 2096415"
+      color:
+        type: "string"
+        example: "СЕРЫЙ"
+      help:
+        type: "boolean"
+      delay:
+        type: "boolean"
+      expired:
+        type: "integer"
+        example: "1"
+    xml:
+      name: "posts"
