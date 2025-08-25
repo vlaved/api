@@ -22,12 +22,29 @@ paths:
     get:
       tags:
       - "conveyer"
-      summary: "Finds Pets by status"
-      description: "Multiple status values can be provided with comma separated strings"
+      summary: "Возвращает актуальную информацию по постам"
+      description: "Значения по умолчанию: from = 2, to = 28."
       operationId: "conveyer"
       produces:
       - "application/json"
+      parameters:
+      - name: "from"
+        in: "query"
+        description: "Номер начального поста"
+        required: false
+        type: "integer"
+      - name: "to"
+        in: "query"
+        description: "Номер конечного поста"
+        required: false
+        type: "integer"
       responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/conveyer"
         400:
           description: "Invalid status value"
   /nzp:
@@ -40,12 +57,6 @@ paths:
       produces:
       - "application/json"
       responses:
-        200:
-          description: "successful operation"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/nzp"
         400:
           description: "Invalid status value"
       deprecated: true
@@ -76,7 +87,7 @@ paths:
           description: "Invalid status value"
       deprecated: true
 definitions:
-  nzp:
+  conveyer:
     type: "object"
     properties:
       total:
@@ -93,13 +104,6 @@ definitions:
           xml:
             name: "Model"
           $ref: "#/definitions/Model"
-      status:
-        type: "string"
-        description: "pet status in the store"
-        enum:
-        - "available"
-        - "pending"
-        - "sold"
     xml:
       name: "nzp"
   Model:
@@ -109,6 +113,7 @@ definitions:
         type: "integer"
         format: "int64"
       count:
-        type: "string"
+        type: "integer"
+        format: "int64"
     xml:
       name: "Model"
