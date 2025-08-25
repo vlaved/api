@@ -1,1 +1,1 @@
-Test
+Пробуем прикрутить Swagger UI к GitHub.
