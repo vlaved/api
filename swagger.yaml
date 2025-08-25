@@ -70,28 +70,32 @@ paths:
     get:
       tags:
       - "sgp"
-      summary: "Finds Pets by status"
-      description: "Multiple status values can be provided with comma separated strings"
+      summary: "План / факт"
+      description: ""
       operationId: "sgp"
       produces:
       - "application/json"
       responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/sgp"
         400:
           description: "Invalid status value"
-      deprecated: true
   /beats:
     get:
       tags:
       - "beats"
-      summary: "Finds Pets by status"
-      description: "Multiple status values can be provided with comma separated strings"
+      summary: "Расписание работы смен с перерывами"
+      description: ""
       operationId: "beats"
       produces:
       - "application/json"
       responses:
         400:
           description: "Invalid status value"
-      deprecated: true
 definitions:
   conveyer:
     type: "object"
@@ -109,6 +113,26 @@ definitions:
           $ref: "#/definitions/posts"
     xml:
       name: "conveyer"
+  sgp:
+    type: "object"
+    properties:
+      errors:
+        type: "string"
+        example: ""
+      plan:
+        type: "integer"
+        example: "13"
+      fact:
+        type: "integer"
+        example: "4"
+      periods:
+        type: "array"
+        xml:
+          wrapped: true
+        items:
+          xml:
+            name: "periods"
+          $ref: "#/definitions/periods"
   nzp:
     type: "object"
     properties:
@@ -147,6 +171,17 @@ definitions:
         example: "2"
     xml:
       name: "models"
+  periods:
+    type: "object"
+    properties:
+      period:
+        type: "string"
+        example: "за месяц"
+      count:
+        type: "integer"
+        example: "6"
+    xml:
+      name: "periods"
   tsm:
     type: "object"
     properties:
