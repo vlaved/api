@@ -30,10 +30,6 @@ paths:
       responses:
         400:
           description: "Invalid status value"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
   /nzp:
     get:
       tags:
@@ -52,10 +48,6 @@ paths:
               $ref: "#/definitions/nzp"
         400:
           description: "Invalid status value"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
       deprecated: true
   /sgp:
     get:
@@ -69,10 +61,6 @@ paths:
       responses:
         400:
           description: "Invalid status value"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
       deprecated: true
   /beats:
     get:
@@ -86,29 +74,10 @@ paths:
       responses:
         400:
           description: "Invalid status value"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
       deprecated: true
-securityDefinitions:
-  api_key:
-    type: "apiKey"
-    name: "api_key"
-    in: "header"
-  petstore_auth:
-    type: "oauth2"
-    authorizationUrl: "https://petstore.swagger.io/oauth/authorize"
-    flow: "implicit"
-    scopes:
-      read:pets: "read your pets"
-      write:pets: "modify pets in your account"
 definitions:
   nzp:
     type: "object"
-    required:
-    - "name"
-    - "photoUrls"
     properties:
       total:
         type: "integer"
@@ -132,7 +101,7 @@ definitions:
         - "pending"
         - "sold"
     xml:
-      name: "Pet"
+      name: "nzp"
   Model:
     type: "object"
     properties:
@@ -142,4 +111,4 @@ definitions:
       count:
         type: "string"
     xml:
-      name: "Tag"
+      name: "Model"
